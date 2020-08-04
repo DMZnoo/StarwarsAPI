@@ -22,7 +22,7 @@ const App = () => {
             });
         console.log(location.pathname);
 
-    },[]);
+    },[location]);
 
     isTitle.map((element)=>{
         titleDivs.push(<TitleCard props={element}/>);
