@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'StarJedi Special Edition';
+    src: local('StarJedi Special Edition'), local('StarJediSpecialEdition'),
+        url('StarJediSpecialEdition.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
