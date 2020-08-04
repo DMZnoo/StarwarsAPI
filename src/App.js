@@ -1,26 +1,57 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React,{useEffect,useState} from 'react'
+import axios from 'axios';
+import TitleCard from "./components/TitleCard";
+import ResultPage from "./components/ResultPage";
+import {withRouter} from 'react-router';
+import { Route, Switch} from "react-router-dom";
+import { useLocation } from 'react-router-dom'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+    const location = useLocation();
+    const [isTitle,SetTitle] = useState([]);
+    const titleDivs = [];
 
-export default App;
+    useEffect(()=>{
+        axios.get('https://swapi.dev/api/')
+            .then((res)=>{
+                Object.keys(res.data).forEach(function(key) {
+                    SetTitle(isTitle=>[...isTitle,key]);
+                });
+            }).catch(function (error) {
+                console.log(error);
+            });
+        console.log(location.pathname);
+
+    },[]);
+
+    isTitle.map((element)=>{
+        titleDivs.push(<TitleCard props={element}/>);
+    });
+
+    return(
+        <main>
+            <Switch>
+                <Route exact path="/">
+                    <div
+                        className="title-col card-columns"
+                        style={{
+                            height:"50vh",
+                            display: "flex",
+                            flexWrap: "wrap",
+                            alignItems: "center",
+                            justifyContent: "center"}}
+                    >
+                        {titleDivs}
+                    </div>
+                </Route>
+                <Route path={`${location.pathname}`}>
+                    <ResultPage props={location.pathname}/>
+                </Route>
+            </Switch>
+
+
+        </main>
+    )
+};
+
+export default withRouter(App);
