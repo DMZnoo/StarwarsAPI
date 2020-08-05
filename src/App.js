@@ -5,6 +5,7 @@ import ResultPage from "./components/ResultPage";
 import {withRouter} from 'react-router';
 import { Route, Switch} from "react-router-dom";
 import { useLocation } from 'react-router-dom'
+import NextPage from "./components/NextPage";
 
 const App = () => {
     const location = useLocation();
@@ -15,13 +16,13 @@ const App = () => {
         axios.get('https://swapi.dev/api/')
             .then((res)=>{
                 Object.keys(res.data).forEach(function(key) {
+
                     SetTitle(isTitle=>[...isTitle,key]);
                 });
+
             }).catch(function (error) {
                 console.log(error);
             });
-        console.log(location.pathname);
-
     },[location]);
 
     isTitle.map((element)=>{
@@ -46,6 +47,7 @@ const App = () => {
                 </Route>
                 <Route path={`${location.pathname}`}>
                     <ResultPage props={location.pathname}/>
+                    <NextPage props={location.pathname}/>
                 </Route>
             </Switch>
 

@@ -5,28 +5,23 @@ const ResultPage = ({props}) => {
     const [isDesc,SetDesc] = useState([]);
     const [isShown,SetShown] = useState(false);
     let [isSearchDesc,SetSearchDesc] = useState(false);
-    const mouseEvent = (el) => {
+    const mouseEvent = () => {
         SetShown(!isShown);
-
-
     };
     useEffect(()=>{
         axios.get(`https://swapi.dev/api${props}`)
             .then((res)=>{
-                console.log(res);
+                console.log(res.data);
                 if(res.data.hasOwnProperty('count'))
                 {
                     SetSearchDesc(false);
                     res.data.results.map((el)=>{
                         SetResult(isResult => [...isResult,el]);
                     });
-                    console.log("RESULTS");
-                    console.log(res.data.results[0]);
                 } else
                 {
                     SetSearchDesc(true);
                     Object.keys(res.data).map((key, index) => (
-
                         SetDesc(isDesc => [...isDesc,
                             <div
                                 className="card-body"
@@ -35,10 +30,7 @@ const ResultPage = ({props}) => {
                                 {key.replace(/_/g," ")}: <div style={{fontSize:"1.5vh"}}>{res.data[key]}</div>
                             </div>])
                     ));
-                    console.log("HERE");
-                    console.log(res.data);
                 }
-
 
 
             }).catch(function (error) {
@@ -48,7 +40,10 @@ const ResultPage = ({props}) => {
     },[]);
 
     return (
-        <div className="result-col card-columns">
+        <div
+            className="result-col card-columns"
+             style={{marginLeft:"4vw"}}
+        >
             {isResult && (isResult.map((el)=>
                     <div
                         className="result card"
@@ -61,7 +56,7 @@ const ResultPage = ({props}) => {
                                 float:"right",
                                 position:"relative"
                             }}
-                            onClick={()=>mouseEvent(el)}
+                            onClick={()=>mouseEvent}
                         >Read More</a>
                         <div className="card-body">
                             Name: { el.hasOwnProperty("name") && (
@@ -86,7 +81,6 @@ const ResultPage = ({props}) => {
                     {isDesc}
                 </div>
             )
-
             }
         </div>
     )

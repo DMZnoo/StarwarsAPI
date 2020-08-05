@@ -14,6 +14,7 @@ html,body {
   font-weight: lighter;
   font-style: normal;
   background-color: #213638;
+  align-content: center;
 }
 .title-col.card-columns {
   @include media-breakpoint-only(lg) {
