@@ -81,7 +81,7 @@ const NextPage = ({props, loading}) => {
 
                 ) : (
                         <a
-                            href={`${isPrev.url.replace(/https:\/\/swapi.dev\/api/g,"")}`}
+                            href={`${isPrev.url.replace(/http:\/\/swapi.dev\/api/g,"")}`}
                             className="btn btn-outline-info col"
                         >
                             Prev
