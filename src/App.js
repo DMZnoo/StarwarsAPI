@@ -1,11 +1,10 @@
 import React,{useEffect,useState} from 'react'
 import axios from 'axios';
 import TitleCard from "./components/TitleCard";
-import ResultPage from "./components/ResultPage";
 import {withRouter} from 'react-router';
 import { Route, Switch} from "react-router-dom";
 import { useLocation } from 'react-router-dom'
-import NextPage from "./components/NextPage";
+import ResultPage from "./components/ResultPage";
 
 const App = () => {
     const location = useLocation();
@@ -15,15 +14,15 @@ const App = () => {
     useEffect(()=>{
         axios.get('https://swapi.dev/api/')
             .then((res)=>{
+                console.log("APP Called")
                 Object.keys(res.data).forEach(function(key) {
-
                     SetTitle(isTitle=>[...isTitle,key]);
                 });
 
             }).catch(function (error) {
                 console.log(error);
             });
-    },[location]);
+    },[]);
 
     isTitle.map((element)=>{
         titleDivs.push(<TitleCard props={element}/>);
@@ -32,7 +31,7 @@ const App = () => {
     return(
         <main>
             <Switch>
-                <Route exact path="/">
+                <Route exact path="/" >
                     <div
                         className="title-col card-columns"
                         style={{
@@ -47,7 +46,6 @@ const App = () => {
                 </Route>
                 <Route path={`${location.pathname}`}>
                     <ResultPage props={location.pathname}/>
-                    <NextPage props={location.pathname}/>
                 </Route>
             </Switch>
 

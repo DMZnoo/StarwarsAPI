@@ -92,14 +92,14 @@ $buttonPrimaryOverride:#77cccc;
 }
 @media (min-width: 768px)
 {
-  .title.card
+  .title-card
   {
     max-width:20vw;
   }
   .result.card
   {
-    max-width:90vw;
-    max-height:10vh;
+    //max-width:90vw;
+    //max-height:10vh;
     //overflow-y:scroll;
   }
 

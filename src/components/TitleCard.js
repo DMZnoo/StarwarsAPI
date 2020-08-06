@@ -1,12 +1,11 @@
 import React, {useEffect} from "react";
-
 const TitleCard = ({props}) => {
     useEffect(()=>{
         console.log(`../resources/title/${props}.jpg`)
-    },[]);
+    },[props]);
     return (
         <div
-            className="title card"
+            className="title-card card"
         >
             <img
 

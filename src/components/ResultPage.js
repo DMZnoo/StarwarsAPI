@@ -1,88 +1,26 @@
-import React,{ useState,useEffect} from "react";
-import axios from "axios";
+import React, {useEffect, useState} from "react";
+import ResultCard from "./ResultCard";
+import NextPage from "./NextPage";
+import {useLocation} from "react-router-dom";
+
 const ResultPage = ({props}) => {
-    const [isResult,SetResult] = useState([]);
-    const [isDesc,SetDesc] = useState([]);
-    const [isShown,SetShown] = useState(false);
-    let [isSearchDesc,SetSearchDesc] = useState(false);
-    const mouseEvent = () => {
-        SetShown(!isShown);
-    };
+    const location = useLocation();
+    const [isRedirect,SetRedirect] = useState(props);
+
     useEffect(()=>{
-        axios.get(`https://swapi.dev/api${props}`)
-            .then((res)=>{
-                console.log(res.data);
-                if(res.data.hasOwnProperty('count'))
-                {
-                    SetSearchDesc(false);
-                    res.data.results.map((el)=>{
-                        SetResult(isResult => [...isResult,el]);
-                    });
-                } else
-                {
-                    SetSearchDesc(true);
-                    Object.keys(res.data).map((key, index) => (
-                        SetDesc(isDesc => [...isDesc,
-                            <div
-                                className="card-body"
-                                key={index}
-                            >
-                                {key.replace(/_/g," ")}: <div style={{fontSize:"1.5vh"}}>{res.data[key]}</div>
-                            </div>])
-                    ));
-                }
+        console.log("LOCATION OF RESULTPAGE: " + isRedirect);
+    },[location])
 
+    const redirectCalled = (url) => {
+        SetRedirect(url);
+    }
 
-            }).catch(function (error) {
-                console.log(error);
-            });
-        ;
-    },[]);
-
-    return (
-        <div
-            className="result-col card-columns"
-             style={{marginLeft:"4vw"}}
-        >
-            {isResult && (isResult.map((el)=>
-                    <div
-                        className="result card"
-                        style={{position:"relative"}}
-                    >
-                        <a
-                            href={`${el.url.replace(/http:\/\/swapi.dev\/api\//g,"")}`}
-                            className="result-btn btn btn-outline-primary"
-                            style={{
-                                float:"right",
-                                position:"relative"
-                            }}
-                            onClick={()=>mouseEvent}
-                        >Read More</a>
-                        <div className="card-body">
-                            Name: { el.hasOwnProperty("name") && (
-                                    el.name
-                                )
-                            }
-                            { el.hasOwnProperty("title") && (
-                                 el.title
-                            )
-                            }
-                        </div>
-
-                    </div>
-                )
-            )
-            }
-            {isSearchDesc && (
-                <div
-                    className="desc card"
-                    style={{position:"relative"}}
-                >
-                    {isDesc}
-                </div>
-            )
-            }
+    return(
+        <div>
+            <ResultCard props={isRedirect} redirectcall={redirectCalled}/>
+            <NextPage props ={isRedirect} redirectcall={redirectCalled}/>
         </div>
+
     )
 };
 export default ResultPage;
