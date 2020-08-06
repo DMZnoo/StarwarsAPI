@@ -1,7 +1,8 @@
 import React,{ useState,useEffect} from "react";
 import axios from 'axios';
 import {useLocation,useHistory} from 'react-router-dom';
-const NextPage = ({props}) => {
+import Pagination from "react-bootstrap/Pagination";
+const NextPage = ({props, loading}) => {
     const location = useLocation();
     const history = useHistory();
     const [isPrev,SetPrev] = useState({
@@ -50,7 +51,9 @@ const NextPage = ({props}) => {
                         });
 
                 }
-            }).catch(function (error) {
+                loading(false);
+            })
+            .catch(function (error) {
             console.log(error);
         });
     },[]);
@@ -83,6 +86,11 @@ const NextPage = ({props}) => {
                 )
 
                 }
+                {/*<div>*/}
+                {/*    <Pagination>*/}
+                {/*        <Pagination.Item>{1}</Pagination.Item>*/}
+                {/*    </Pagination>*/}
+                {/*</div>*/}
 
                 {isNext.url === null ? (
                     <button

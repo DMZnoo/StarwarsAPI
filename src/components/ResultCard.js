@@ -2,7 +2,7 @@ import React,{ useState,useEffect} from "react";
 import axios from "axios";
 import { useLocation } from 'react-router-dom'
 
-const ResultCard = ({props}) => {
+const ResultCard = ({props, loading}) => {
     const location = useLocation();
     const [isResult,SetResult] = useState([]);
     const [isDesc,SetDesc] = useState([]);
@@ -128,9 +128,9 @@ const ResultCard = ({props}) => {
                             }
                         })
                 }
-
-
-            }).catch(function (error) {
+                loading(false);
+            })
+            .catch(function (error) {
                 console.log(error);
             });
 
@@ -158,7 +158,7 @@ const ResultCard = ({props}) => {
                             }}
                         >Read More</a>
                         <div className="card-body">
-                            Name: { el.hasOwnProperty("name") && (
+                            { el.hasOwnProperty("name") && (
                                     el.name
                                 )
                             }

@@ -2,23 +2,56 @@ import React, {useEffect, useState} from "react";
 import ResultCard from "./ResultCard";
 import NextPage from "./NextPage";
 import {useLocation} from "react-router-dom";
+import styled from 'styled-components';
 
 const ResultPage = ({props}) => {
     const location = useLocation();
-    const [isRedirect,SetRedirect] = useState(props);
-
+    const [isLoading,SetLoading] = useState(true);
     useEffect(()=>{
-        console.log("LOCATION OF RESULTPAGE: " + isRedirect);
-    },[location])
+    },[isLoading])
 
-    const redirectCalled = (url) => {
-        SetRedirect(url);
+    const setPageLoading = (bool) =>{
+        SetLoading(bool)
     }
 
     return(
         <div>
-            <ResultCard props={isRedirect} redirectcall={redirectCalled}/>
-            <NextPage props ={isRedirect} redirectcall={redirectCalled}/>
+            <div
+                style={{visibility: isLoading ? "hidden" : "visible"}}
+            >
+                <ResultCard
+                    props={props}
+                    loading={setPageLoading}
+                    // style={{visibility: isLoading ? "hidden" : "visible"}}
+                />
+                <NextPage
+                    props ={props}
+                    loading={setPageLoading}
+                    // style={{visibility: isLoading ? "hidden" : "visible"}}
+                />
+                </div>
+            {isLoading && (
+                <div className="d-flex justify-content-center">
+                    <div
+                        className="spinner-border text-primary"
+                        role="status"
+                        style={{
+                            // visibility: isLoading ? "visible" : "hidden",
+                            alignContent:"center",
+                            width: "3rem",
+                            height: "3rem"
+                        }}
+                    >
+                        <span className="sr-only">Loading...</span>
+                    </div>
+                </div>
+            )
+
+            }
+
+
+
+
         </div>
 
     )

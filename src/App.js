@@ -14,7 +14,6 @@ const App = () => {
     useEffect(()=>{
         axios.get('https://swapi.dev/api/')
             .then((res)=>{
-                console.log("APP Called")
                 Object.keys(res.data).forEach(function(key) {
                     SetTitle(isTitle=>[...isTitle,key]);
                 });
@@ -27,6 +26,7 @@ const App = () => {
     isTitle.map((element)=>{
         titleDivs.push(<TitleCard props={element}/>);
     });
+
 
     return(
         <main>
