@@ -45,7 +45,8 @@ const ResultCard = ({props, loading}) => {
                                         >
                                             {
                                                 res.data[key].map((el) => {
-                                                axios.get(`${el}`).then((res) => {
+                                                    const url = el.replace(/http/g,"https");
+                                                axios.get(`${url}`).then((res) => {
                                                     if (res.data.hasOwnProperty('title')) {
                                                         console.log(res.data.title);
                                                         let node = document.createElement("LI");
