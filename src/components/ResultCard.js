@@ -10,7 +10,8 @@ const ResultCard = ({props, loading}) => {
     let endPoint = "https://swapi.dev/api";
     useEffect(()=>{
         let url = endPoint+props+location.search;
-        if(url.search(/page|[^0-9]/i) === -1)
+        if(url.search(/\/$/g) === -1 &&
+            url.search(/page/g) === -1)
         {
             url += "/?page=1";
         }
