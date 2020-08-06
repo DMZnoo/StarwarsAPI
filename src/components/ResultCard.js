@@ -13,7 +13,11 @@ const ResultCard = ({props, loading}) => {
         // {
         //     endPoint = "http://swapi.dev/api";
         // }
-        const url = endPoint+props+location.search;
+        let url = endPoint+props+location.search;
+        if(url.search(/page/g) === -1)
+        {
+            url += "/?page=1";
+        }
         console.log("CARD URL ",url);
         axios.get(`${url}`)
             .then((res)=>{
