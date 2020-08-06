@@ -128,8 +128,9 @@ const ResultCard = ({props, loading}) => {
                             }
                         })
                 }
-                loading(false);
+
             })
+            .then((res)=>loading(false))
             .catch(function (error) {
                 console.log(error);
             });
@@ -141,8 +142,9 @@ const ResultCard = ({props, loading}) => {
             className="result-col card-columns"
              style={{marginLeft:"4vw"}}
         >
-            {isResult && (isResult.map((el)=>
+            {isResult && (isResult.map((el,li)=>
                     <div
+                        key={el+li}
                         className="result card"
                         style={{position:"relative"}}
                     >

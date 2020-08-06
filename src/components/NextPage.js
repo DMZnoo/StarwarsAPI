@@ -66,15 +66,19 @@ const NextPage = ({props, loading}) => {
         <div className="container">
             <div className="row">
                 {isPrev.url === null ? (
+
                     <button
+
                         onClick={()=>(
-                            ((location.pathname.search(/[^0-9]/g) === -1) || (location.search === "?page=1"))
-                            ? history.push(`/`)
-                            : history.goBack())}
+                            ((location.pathname.search(/[^0-9]/g) === -1) || (location.search === "?page=1")) ?
+                                history.push("/") :
+                                history.goBack())}
                         className="btn btn-outline-info col"
                     >
                         Prev
                     </button>
+
+
                 ) : (
                         <a
                             href={`${isPrev.url.replace(/http:\/\/swapi.dev\/api/g,"")}`}
@@ -86,11 +90,14 @@ const NextPage = ({props, loading}) => {
                 )
 
                 }
-                {/*<div>*/}
-                {/*    <Pagination>*/}
-                {/*        <Pagination.Item>{1}</Pagination.Item>*/}
-                {/*    </Pagination>*/}
-                {/*</div>*/}
+                <button
+                    className="btn btn-outline-info col"
+                    onClick={()=>{
+                        history.push("/")
+                    }}
+                >
+                    <a>Home</a>
+                </button>
 
                 {isNext.url === null ? (
                     <button

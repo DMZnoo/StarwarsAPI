@@ -24,7 +24,7 @@ const App = () => {
     },[]);
 
     isTitle.map((element)=>{
-        titleDivs.push(<TitleCard props={element}/>);
+        titleDivs.push(<TitleCard key={element} props={element}/>);
     });
 
 

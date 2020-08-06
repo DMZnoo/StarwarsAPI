@@ -22,12 +22,10 @@ const ResultPage = ({props}) => {
                 <ResultCard
                     props={props}
                     loading={setPageLoading}
-                    // style={{visibility: isLoading ? "hidden" : "visible"}}
                 />
                 <NextPage
                     props ={props}
                     loading={setPageLoading}
-                    // style={{visibility: isLoading ? "hidden" : "visible"}}
                 />
                 </div>
             {isLoading && (
@@ -36,7 +34,6 @@ const ResultPage = ({props}) => {
                         className="spinner-border text-primary"
                         role="status"
                         style={{
-                            // visibility: isLoading ? "visible" : "hidden",
                             alignContent:"center",
                             width: "3rem",
                             height: "3rem"
