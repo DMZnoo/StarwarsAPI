@@ -151,8 +151,8 @@ const ResultCard = ({props, loading}) => {
                         <a
                             href={
                                 (location.search).search(/page/i) !== -1
-                                    ? `${el.url.replace(/http:\/\/swapi.dev\/api\/[a-zA-Z]*\//i,"")}`
-                                    : `${el.url.replace(/http:\/\/swapi.dev\/api\//i,"")}`}
+                                    ? `${el.url.replace(/https:\/\/swapi.dev\/api\/[a-zA-Z]*\//i,"")}`
+                                    : `${el.url.replace(/https:\/\/swapi.dev\/api\//i,"")}`}
                             className="result-btn btn btn-outline-primary"
                             style={{
                                 float:"right",
