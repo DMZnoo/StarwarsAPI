@@ -75,7 +75,9 @@ const ResultCard = ({props, loading}) => {
                                 if(res.data[key].search(/http/g) !== -1 && key !== "url")
                                 {
                                     console.log("HAS HTTP",res.data[key]);
-                                    axios.get(`${res.data[key]}`).then((res) => {
+                                    const url = res.data[key].replace(/http/g,"https");
+                                    console.log("HAS HTTP",url);
+                                    axios.get(`${url}`).then((res) => {
                                         if (res.data.hasOwnProperty('title')) {
                                             SetDesc(isDesc => [...isDesc,
                                                 <div
