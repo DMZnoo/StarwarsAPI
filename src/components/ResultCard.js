@@ -9,10 +9,10 @@ const ResultCard = ({props, loading}) => {
     const [isSearchDesc,SetSearchDesc] = useState(false);
     let endPoint = "https://swapi.dev/api";
     useEffect(()=>{
-        if((props+location.search).search(/page/i) !== -1)
-        {
-            endPoint = "http://swapi.dev/api";
-        }
+        // if((props+location.search).search(/page/i) !== -1)
+        // {
+        //     endPoint = "http://swapi.dev/api";
+        // }
         const url = endPoint+props+location.search;
         axios.get(`${url}`)
             .then((res)=>{

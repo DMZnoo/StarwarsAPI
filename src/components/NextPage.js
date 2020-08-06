@@ -16,10 +16,10 @@ const NextPage = ({props, loading}) => {
 
     let endPoint = "https://swapi.dev/api";
     useEffect(()=> {
-        if((props+location.search).search(/page/g) !== -1)
-        {
-            endPoint = "http://swapi.dev/api";
-        }
+        // if((props+location.search).search(/page/g) !== -1)
+        // {
+        //     endPoint = "http://swapi.dev/api";
+        // }
         const url = endPoint+props+location.search;
         axios.get(`${url}`)
             .then((res)=>{
