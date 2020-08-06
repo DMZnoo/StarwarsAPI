@@ -14,9 +14,9 @@ const ResultCard = ({props, loading}) => {
         //     endPoint = "http://swapi.dev/api";
         // }
         const url = endPoint+props+location.search;
+        console.log("CARD URL ",url);
         axios.get(`${url}`)
             .then((res)=>{
-                console.log("CARD URL ",url);
                 console.log("CARD: ",res.data);
                 if(res.data.hasOwnProperty('count'))
                 {
