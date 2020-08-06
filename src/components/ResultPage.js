@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import ResultCard from "./ResultCard";
 import NextPage from "./NextPage";
 import {useLocation} from "react-router-dom";
-import styled from 'styled-components';
 
 const ResultPage = ({props}) => {
     const location = useLocation();
