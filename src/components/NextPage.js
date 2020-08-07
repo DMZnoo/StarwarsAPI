@@ -61,7 +61,7 @@ const NextPage = ({props, loading}) => {
     },[]);
 
     return (
-        <div className="container">
+        <div className="container pb-1">
             <div className="row">
                 {isPrev.url === null ? (
                     <button
@@ -91,15 +91,7 @@ const NextPage = ({props, loading}) => {
                     <a>Home</a>
                 </button>
 
-                {isNext.url === null ? (
-                    <button
-                        disabled={isNext.disable}
-                        className="btn btn-outline-info col"
-                    >
-                        <a>Next</a>
-                    </button>
-
-                ) : (
+                {isNext.url !== null && (
                     <a
                         href={`${isNext.url.replace(/http:\/\/swapi.dev\/api/g,"")}`}
                         className="btn btn-outline-info col"

@@ -144,8 +144,7 @@ const ResultCard = ({props, loading}) => {
 
     return (
         <div
-            className="result-col card-columns"
-             style={{marginLeft:"4vw"}}
+            className="result-col card-columns ml-1 mr-1"
         >
             {isResult && (isResult.map((el,li)=>
                     <div
