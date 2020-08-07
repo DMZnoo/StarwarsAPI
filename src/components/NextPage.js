@@ -22,7 +22,6 @@ const NextPage = ({props, loading}) => {
         {
             url += "/?page=1";
         }
-        console.log("NEXT PAGE: ",url);
         axios.get(`${url}`)
             .then((res)=>{
                 if(res.data.hasOwnProperty('previous'))
@@ -57,6 +56,8 @@ const NextPage = ({props, loading}) => {
             })
             .catch(function (error) {
             console.log(error);
+            alert("PAGE NOT FOUND")
+            history.goBack();
         });
     },[]);
 
@@ -64,15 +65,53 @@ const NextPage = ({props, loading}) => {
         <div className="container pb-1">
             <div className="row">
                 {isPrev.url === null ? (
-                    <button
-                        onClick={()=>(
-                            ((location.pathname.search(/[^0-9]/g) === -1) || (location.search === "?page=1")) ?
-                                history.push("/") :
-                                history.goBack())}
-                        className="btn btn-outline-info col"
-                    >
-                        Prev
-                    </button>
+                        (location.pathname.search(/[^0-9]/g) === -1) ? (
+                                <button
+                                    onClick={()=>(
+                                        ((location.search === "?page=1")) ?
+                                            history.push("/") :
+                                            history.goBack())}
+                                    className="btn btn-outline-info col"
+                                >
+                                    Prev
+                                </button>
+                            ): (
+                            location.pathname.search(/[0-9]/g) === -1
+                                ? (
+                                        <button
+                                            onClick={()=>
+                                                ((location.search === "?page=1")) ?
+                                                    history.push("/"):
+                                                    history.goBack()
+                                            }
+                                            className="btn btn-outline-info col"
+                                        >
+                                            Prev
+                                        </button>
+                                    ) :
+                                    (
+                                        <a
+                                            href={
+                                                ((location.search === "?page=1")) ?
+                                                    "/":
+                                                    (
+                                                        location.pathname
+                                                                .replace(("/"+location.pathname.match(/[0-9]/g).join('')),"")
+                                                    )
+
+                                            }
+                                            className="btn btn-outline-info col"
+                                        >
+                                            Prev
+                                        </a>
+                                    )
+
+
+
+                        )
+
+
+
                 ) : (
                         <a
                             href={`${isPrev.url.replace(/http:\/\/swapi.dev\/api/g,"")}`}
@@ -82,14 +121,16 @@ const NextPage = ({props, loading}) => {
                         </a>
                 )
                 }
-                <button
+                <a
                     className="btn btn-outline-info col"
-                    onClick={()=>{
-                        history.push("/")
-                    }}
+                    href={(
+                        ((location.pathname.search(/[^0-9]/g) === -1) || (location.search === "?page=1")) ?
+                            "/" :
+                            (location.pathname.search(/[0-9]/g) !== -1 ? "/"+location.pathname.split("/")[1] : "/"))
+                            }
                 >
                     <a>Home</a>
-                </button>
+                </a>
 
                 {isNext.url !== null && (
                     <a
