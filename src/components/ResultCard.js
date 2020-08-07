@@ -187,7 +187,7 @@ const ResultCard = ({props, loading}) => {
                     <div
                         style={{position:"absolute",left:"80vw",top:"0vh"}}
                     >
-                        <a type="button" className="close p-4 btn-sm" onClick={()=>(history.goBack())}>
+                        <a type="button" className="close p-4" onClick={()=>(history.goBack())}>
                             <span style={{fontSize:"5vh"}}>&times;</span>
                         </a>
                     </div>
