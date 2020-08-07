@@ -1,8 +1,10 @@
 import React,{ useState,useEffect} from "react";
 import axios from "axios";
-import { useLocation } from 'react-router-dom'
+import { useLocation,useHistory } from 'react-router-dom'
 
 const ResultCard = ({props, loading}) => {
+    const history = useHistory();
+
     const location = useLocation();
     const [isResult,SetResult] = useState([]);
     const [isDesc,SetDesc] = useState([]);
@@ -70,7 +72,6 @@ const ResultCard = ({props, loading}) => {
                                         </div>
                                     </div>
                                 ])
-
                             }
                             else
                             {
@@ -183,6 +184,14 @@ const ResultCard = ({props, loading}) => {
                     className="desc card"
                     style={{position:"relative"}}
                 >
+                    <div
+                        style={{position:"absolute",left:"80vw",top:"-3vh"}}
+                    >
+                        <a type="button" className="close p-4 btn-sm" onClick={()=>(history.goBack())}>
+                            <span style={{fontSize:"5vh"}}>&times;</span>
+                        </a>
+                    </div>
+
                     {isDesc}
                 </div>
             )

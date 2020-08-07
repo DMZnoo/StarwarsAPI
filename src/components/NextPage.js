@@ -60,17 +60,11 @@ const NextPage = ({props, loading}) => {
         });
     },[]);
 
-
-
-
-
     return (
         <div className="container">
             <div className="row">
                 {isPrev.url === null ? (
-
                     <button
-
                         onClick={()=>(
                             ((location.pathname.search(/[^0-9]/g) === -1) || (location.search === "?page=1")) ?
                                 history.push("/") :
@@ -79,8 +73,6 @@ const NextPage = ({props, loading}) => {
                     >
                         Prev
                     </button>
-
-
                 ) : (
                         <a
                             href={`${isPrev.url.replace(/http:\/\/swapi.dev\/api/g,"")}`}
@@ -88,9 +80,7 @@ const NextPage = ({props, loading}) => {
                         >
                             Prev
                         </a>
-
                 )
-
                 }
                 <button
                     className="btn btn-outline-info col"
@@ -117,11 +107,8 @@ const NextPage = ({props, loading}) => {
                         Next
                     </a>
                 )
-
                 }
-
             </div>
-
         </div>
     )
 };
