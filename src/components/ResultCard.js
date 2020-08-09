@@ -1,10 +1,9 @@
 import React,{ useState,useEffect} from "react";
 import axios from "axios";
 import { useLocation,useHistory } from 'react-router-dom'
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import { getUrl } from '../actions';
 const ResultCard = ({props, loading}) => {
-    const history = useHistory();
     const location = useLocation();
     const [isResult,SetResult] = useState([]);
     const [isDesc,SetDesc] = useState([]);
@@ -28,7 +27,6 @@ const ResultCard = ({props, loading}) => {
                     res.data.results.map((el)=>{
                         let link = el.url.replace(/http:\/\/swapi.dev\/api\/[a-zA-Z]*\//i,"");
                         link = parseInt(link.replace(/\//g,""));
-                        // SetPages(link);
                         console.log("LINK ",link);
                         dispatch(getUrl(link));
 
