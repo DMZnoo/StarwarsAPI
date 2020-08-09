@@ -1,14 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import ResultCard from "./ResultCard";
 import NextPage from "./NextPage";
-import {useLocation} from "react-router-dom";
-
 const ResultPage = ({props}) => {
-    const location = useLocation();
     const [isLoading,SetLoading] = useState(true);
-    useEffect(()=>{
-    },[isLoading])
-
     const setPageLoading = (bool) =>{
         SetLoading(bool)
     }
@@ -21,12 +15,13 @@ const ResultPage = ({props}) => {
                 <ResultCard
                     props={props}
                     loading={setPageLoading}
+                    // SetPages={SetPages}
                 />
                 <NextPage
                     props ={props}
                     loading={setPageLoading}
                 />
-                </div>
+            </div>
             {isLoading && (
                 <div className="d-flex justify-content-center">
                     <div
@@ -42,12 +37,7 @@ const ResultPage = ({props}) => {
                     </div>
                 </div>
             )
-
             }
-
-
-
-
         </div>
 
     )

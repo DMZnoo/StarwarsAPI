@@ -1,14 +1,15 @@
 import React,{ useState,useEffect} from "react";
 import axios from "axios";
 import { useLocation,useHistory } from 'react-router-dom'
-
+import {useDispatch, useSelector} from 'react-redux';
+import { getUrl } from '../actions';
 const ResultCard = ({props, loading}) => {
     const history = useHistory();
-
     const location = useLocation();
     const [isResult,SetResult] = useState([]);
     const [isDesc,SetDesc] = useState([]);
     const [isSearchDesc,SetSearchDesc] = useState(false);
+    const dispatch = useDispatch();
     let endPoint = "https://swapi.dev/api";
     useEffect(()=>{
         let url = endPoint+props+location.search;
@@ -25,6 +26,12 @@ const ResultCard = ({props, loading}) => {
                 {
                     SetSearchDesc(false);
                     res.data.results.map((el)=>{
+                        let link = el.url.replace(/http:\/\/swapi.dev\/api\/[a-zA-Z]*\//i,"");
+                        link = parseInt(link.replace(/\//g,""));
+                        // SetPages(link);
+                        console.log("LINK ",link);
+                        dispatch(getUrl(link));
+
                         SetResult(isResult => [...isResult,el]);
                     });
                 } else
@@ -34,6 +41,7 @@ const ResultCard = ({props, loading}) => {
                         .forEach((key,index)=>{
                             if(Array.isArray(res.data[key]))
                             {
+
                                 SetDesc(isDesc=>[...isDesc,
                                     <div
                                         className="card-body"
@@ -49,37 +57,38 @@ const ResultCard = ({props, loading}) => {
                                             {
                                                 res.data[key].map((el) => {
                                                     const url = el.replace(/http/g,"https");
-                                                axios.get(`${url}`).then((res) => {
-                                                    if (res.data.hasOwnProperty('title')) {
-                                                        console.log(res.data.title);
-                                                        let node = document.createElement("LI");
-                                                        let textnode = document.createTextNode(res.data.title);
-                                                        node.append(textnode);
-                                                        document.getElementById(`card-body-${key}`).appendChild(node);
-                                                    }
-                                                    if (res.data.hasOwnProperty('name')) {
-                                                        console.log(res.data.name);
-                                                        let node = document.createElement("LI");
-                                                        let textnode = document.createTextNode(res.data.name);
-                                                        node.append(textnode);
-                                                        document.getElementById(`card-body-${key}`).appendChild(node);
-                                                    }
-                                                }).catch(function (err) {
-                                                    console.log(err)
+                                                    axios.get(`${url}`).then((res) => {
+                                                        if (res.data.hasOwnProperty('title')) {
+                                                            console.log(res.data.title);
+                                                            let node = document.createElement("LI");
+                                                            let textnode = document.createTextNode(res.data.title);
+                                                            node.append(textnode);
+                                                            document.getElementById(`card-body-${key}`).appendChild(node);
+                                                        }
+                                                        if (res.data.hasOwnProperty('name')) {
+                                                            console.log(res.data.name);
+                                                            let node = document.createElement("LI");
+                                                            let textnode = document.createTextNode(res.data.name);
+                                                            node.append(textnode);
+                                                            document.getElementById(`card-body-${key}`).appendChild(node);
+                                                        }
+                                                    }).catch(function (err) {
+                                                        console.log(err)
+                                                    })
+
                                                 })
-                                            })
+
                                             }
                                         </div>
                                     </div>
                                 ])
+
                             }
                             else
                             {
                                 if(res.data[key].search(/http/g) !== -1 && key !== "url")
                                 {
-                                    console.log("HAS HTTP",res.data[key]);
                                     const url = res.data[key].replace(/http/g,"https");
-                                    console.log("HAS HTTP",url);
                                     axios.get(`${url}`).then((res) => {
                                         if (res.data.hasOwnProperty('title')) {
                                             SetDesc(isDesc => [...isDesc,
@@ -147,34 +156,37 @@ const ResultCard = ({props, loading}) => {
             className="result-col card-columns ml-1 mr-1"
         >
             {isResult && (isResult.map((el,li)=>
-                    <div
-                        key={el+li}
-                        className="result card"
-                        style={{position:"relative"}}
-                    >
-                        <a
-                            href={
-                                (location.search).search(/page/i) !== -1
-                                    ? `${el.url.replace(/http:\/\/swapi.dev\/api\/[a-zA-Z]*\//i,"")}`
-                                    : `${el.url.replace(/http:\/\/swapi.dev\/api\//i,"")}`}
-                            className="result-btn btn btn-outline-primary"
-                            style={{
-                                float:"right",
-                                position:"relative"
-                            }}
-                        >Read More</a>
-                        <div className="card-body">
-                            { el.hasOwnProperty("name") && (
+                    (
+                        <div
+                            key={el+li}
+                            className="result card"
+                            style={{position:"relative"}}
+                        >
+                            <a
+                                key={`result-card-${li}`}
+                                href={
+                                    (location.search).search(/page/i) !== -1
+                                        ? `${el.url.replace(/http:\/\/swapi.dev\/api\/[a-zA-Z]*\//i,"")}`
+                                        : `${el.url.replace(/http:\/\/swapi.dev\/api\//i,"")}`}
+                                className="result-btn btn btn-outline-primary"
+                                style={{
+                                    float:"right",
+                                    position:"relative"
+                                }}
+                            >Read More</a>
+                            <div className="card-body">
+                                { el.hasOwnProperty("name") && (
                                     el.name
                                 )
-                            }
-                            { el.hasOwnProperty("title") && (
-                                 el.title
-                            )
-                            }
-                        </div>
+                                }
+                                { el.hasOwnProperty("title") && (
+                                    el.title
+                                )
+                                }
+                            </div>
 
-                    </div>
+                        </div>
+                    )
                 )
             )
             }
@@ -186,7 +198,7 @@ const ResultCard = ({props, loading}) => {
                     <div
                         style={{position:"absolute",left:"80vw",top:"0vh"}}
                     >
-                        <a className="close p-4" onClick={()=>(history.goBack())}>
+                        <a className="close p-4" href={("/"+location.pathname.split("/")[1])}>
                             <span style={{fontSize:"5vh"}}>&times;</span>
                         </a>
                     </div>

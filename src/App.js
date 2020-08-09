@@ -6,9 +6,10 @@ import { Route, Switch} from "react-router-dom";
 import { useLocation } from 'react-router-dom'
 import ResultPage from "./components/ResultPage";
 
-const App = () => {
+const App = ({persistor}) => {
     const location = useLocation();
     const [isTitle,SetTitle] = useState([]);
+    // const [isResultPage,SetResultPage] = useState([]);
     const titleDivs = [];
 
     useEffect(()=>{
@@ -17,8 +18,12 @@ const App = () => {
                 Object.keys(res.data).forEach(function(key) {
                     SetTitle(isTitle=>[...isTitle,key]);
                 });
-
-            }).catch(function (error) {
+            }).then((res)=> {
+                if(location.pathname==="/")
+                    persistor.purge();
+        }
+        )
+            .catch(function (error) {
                 console.log(error);
             });
     },[]);
@@ -27,11 +32,10 @@ const App = () => {
         titleDivs.push(<TitleCard key={element} props={element}/>);
     });
 
-
     return(
         <main>
             <Switch>
-                <Route exact path="/" >
+                <Route exact path="/" render={()=>(
                     <div
                         className="title-col card-columns"
                         style={{
@@ -43,9 +47,12 @@ const App = () => {
                     >
                         {titleDivs}
                     </div>
+                )}>
                 </Route>
-                <Route path={`${location.pathname}`}>
+                <Route path={`${location.pathname}`} render={()=>(
                     <ResultPage props={location.pathname}/>
+                )}>
+
                 </Route>
             </Switch>
 
