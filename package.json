@@ -11,7 +11,7 @@
     "connected-react-router": "^6.8.0",
     "elliptic": "^6.5.3",
     "history": "^5.0.0",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "react": "^16.13.1",
     "react-bootstrap": "latest",
     "react-dom": "^16.13.1",
